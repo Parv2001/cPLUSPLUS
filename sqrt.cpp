@@ -1,27 +1,65 @@
-#include <iostream>
-
+#include<iostream>
 using namespace std;
-int main() {
-    cout << "Enter the number ";
-    int n;
-    cin >> n;
-    cout << "Enter the precision ";
-    int p;
-    cin >> p;
-    
-    if(n == 1){ // If n is 1 square root is 1.
-        cout << 1.0;
-    }
-    
-    float inc = 1.0; // To store the increment value.
-    
-    for (int i = 0; i < p; i++){ // Divide by 10 precision number of times.
-        inc = inc / 10;
-    }
-    
-    for (float i = inc; i < n; i = i + inc) {
-        if (i * i >= n){ // If i*i exceeds n we are near the square root.
-            cout << i;
+
+
+long long int BinarySearch(int n){
+
+        int s =0;
+        int e=n;
+        long long int mid = s + (e-s)/2;
+
+        long long int ans = -1;
+
+        while(s<=e){
+             
+            long long int square = mid*mid;
+
+            if(square==n){
+                return mid;
+            }
+            if(square<n){
+                ans=mid;
+                s=mid+1;
+            }
+            else
+            {
+                e=mid-1;
+            }
+
+            mid = s + (e-s)/2;
         }
+        return ans;
+
     }
-}
+
+
+    double morePrecision(int n , int precision , int firstSol ){
+
+        double factor = 1;
+        double ans = firstSol;
+
+        for(int i=0 ; i<precision; i++){
+
+            factor = factor/10;
+
+            for(double j=ans; j*j<n; j=j+factor){
+                ans=j;
+
+            }
+    }
+    return ans;
+   }
+
+    int main(){
+        int n;
+        cout<<"Enter the Number: "<<endl;
+        cin>>n;
+
+        int firstSol = BinarySearch(n);
+        cout<<"Answer is: "<<morePrecision(n, 4, firstSol);
+
+        return 0;
+
+
+     }
+
